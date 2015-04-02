@@ -154,8 +154,42 @@ def axiom_generator_percept_sentence(t, tvec):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
+    count = 0
+    for boolean in tvec:
+	if boolean == False:
+		if count == 0:
+			axiom_str += '~Stench' + str(t)
+			count += 1
+		elif count == 1:
+			axiom_str += ' & ~Breeze' + str(t)
+			count+= 1
+		elif count == 2:
+			axiom_str += ' & ~Glitter' + str(t)
+			count += 1
+		elif count == 3:
+			axiom_str += ' & ~Bump' + str(t)
+			count += 1
+		else:
+			axiom_str += ' & ~Scream' + str(t)
+			count += 1
+	else:
+		if count == 0:
+			axiom_str += 'Stench' + str(t)
+			count += 1
+		elif count == 1:
+			axiom_str += ' & Breeze' + str(t)
+			count += 1
+		elif count == 2:
+			axiom_str += ' & Glitter' + str(t)
+			count += 1
+		elif count == 3:
+			axiom_str += ' & Bump' + str(t)
+			count += 1
+		else:
+			axiom_str += ' & Scream' + str(t)
+			count += 1
     # Comment or delete the next line once this function has been implemented.
-    utils.print_not_implemented()
+    #utils.print_not_implemented()
     return axiom_str
 
 
