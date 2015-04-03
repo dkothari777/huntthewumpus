@@ -223,9 +223,30 @@ def axiom_generator_pits_and_breezes(x, y, xmin, xmax, ymin, ymax):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
-    for i in range(xmin, xmax + 1):
-        for j in range(ymin, ymax + 1):
-            
+    axiom_str = pit_str(x,y) + '>>'
+    south = False
+    east = False
+    west = False
+    if(x-1 > xmin):
+        axiom_str += breeze_str(x-1, y)
+        west = True
+    if(x+1 < xmax):
+        if west == True:
+            axiom_str += '&' + breeze_str(x+1, y)
+        else:
+            axiom_str += breeze_str(x+1, y)
+        east = True    
+    if(y-1 > ymin):
+        if west or east:
+            axiom_str += '&' + breeze_str(x, y-1)
+        else:
+            axiom_str += breeze_str(x, y-1)
+        south = True
+    if(y+1 < ymax):
+        if west or east or south:
+            axiom_str += '&' + breeze_str(x, y+1)
+        else:
+            axiom_str += breeze_str(x, y+1)
     return axiom_str
 
 def generate_pit_and_breeze_axioms(xmin, xmax, ymin, ymax):
@@ -252,6 +273,30 @@ def axiom_generator_wumpus_and_stench(x, y, xmin, xmax, ymin, ymax):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
+    axiom_str = wumpus_str(x, y) + '>>'
+    south = False
+    east = False
+    west = False
+    if(x-1 > xmin):
+        axiom_str += stench_str(x-1, y)
+        west = True
+    if(x+1 < xmax):
+        if west == True:
+            axiom_str += '&' + stench_str(x+1, y)
+        else:
+            axiom_str += stench_str(x+1, y)
+        east = True    
+    if(y-1 > ymin):
+        if west or east:
+            axiom_str += '&' + stench_str(x, y-1)
+        else:
+            axiom_str += stench_str(x, y-1)
+        south = True
+    if(y+1 < ymax):
+        if west or east or south:
+            axiom_str += '&' + stench_str(x, y+1)
+        else:
+            axiom_str += stench_str(x, y+1)
     return axiom_str
 
 def generate_wumpus_and_stench_axioms(xmin, xmax, ymin, ymax):
