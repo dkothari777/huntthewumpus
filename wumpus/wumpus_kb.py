@@ -360,6 +360,16 @@ def axiom_generator_location_OK(x, y, t):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
+    
+    if wumpus_str(x,y):
+        axiom_str += "Wumpus + " + str(t)
+    if pit_str(x,y):
+        axiom_str += "Pit + " + str(t)
+    if stench_str(x,y):
+        axiom_str += "Stench + " + str(t)
+    if breeze_str(x,y):
+        axiom_str += "Breeze + " + str(t)
+
     return axiom_str
 
 def generate_square_OK_axioms(t, xmin, xmax, ymin, ymax):
