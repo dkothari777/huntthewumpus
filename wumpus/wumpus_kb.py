@@ -206,7 +206,9 @@ def axiom_generator_initial_location_assertions(x, y):
     axiom_str = ''
     "*** YOUR CODE HERE ***"
     # Comment or delete the next line once this function has been implemented.
-    utils.print_not_implemented()
+    axiom_str = '~' + wumpus_str(x, y) + '&~' + pit_str(x, y)
+    
+    #utils.print_not_implemented()
     return axiom_str
 
 def axiom_generator_pits_and_breezes(x, y, xmin, xmax, ymin, ymax):
@@ -221,6 +223,9 @@ def axiom_generator_pits_and_breezes(x, y, xmin, xmax, ymin, ymax):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
+    for i in range(xmin, xmax + 1):
+        for j in range(ymin, ymax + 1):
+            
     return axiom_str
 
 def generate_pit_and_breeze_axioms(xmin, xmax, ymin, ymax):
