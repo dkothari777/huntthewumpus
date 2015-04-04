@@ -317,7 +317,12 @@ def axiom_generator_at_least_one_wumpus(xmin, xmax, ymin, ymax):
     axiom_str = ''
     "*** YOUR CODE HERE ***"
     # Comment or delete the next line once this function has been implemented.
-    utils.print_not_implemented()
+    for i in range(xmin, xmax):
+        for j in range(ymin, ymax):
+            if(i != xmax -1) and (j != ymax -1):
+                axiom_str +=  wumpus_str(i, j) + " | "
+            else:
+                axiom_str += wumpus_str(i, j)
     return axiom_str
 
 def axiom_generator_at_most_one_wumpus(xmin, xmax, ymin, ymax):
@@ -329,7 +334,19 @@ def axiom_generator_at_most_one_wumpus(xmin, xmax, ymin, ymax):
     axiom_str = ''
     "*** YOUR CODE HERE ***"
     # Comment or delete the next line once this function has been implemented.
-    utils.print_not_implemented()
+    for i in range(xmin, xmax):
+        for j in range(ymin, ymax):
+            axiom_str += "(" + wumpus_str(i, j) + ' >> ~ ( '
+            for x in range(xmin, xmax):
+                for y in range(ymin, ymax):
+                    if (x != i) and (y != j):
+                        if(x != xmax) and (y != ymax):
+                            axiom_str += wumpus_str(x, y) + " & "
+                        else:
+                            axiom_str += wumpus_str(x, y)
+            axiom_str += "))"
+            if (i != xmax-1) and (y != ymax -1):
+                axiom_str += "&"
     return axiom_str
 
 def axiom_generator_only_in_one_location(xi, yi, xmin, xmax, ymin, ymax, t = 0):
