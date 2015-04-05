@@ -223,30 +223,30 @@ def axiom_generator_pits_and_breezes(x, y, xmin, xmax, ymin, ymax):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
-    axiom_str = pit_str(x,y) + '>>'
+    axiom_str = breeze_str(x,y) + '<=>'
     south = False
     east = False
     west = False
     if(x-1 > xmin):
-        axiom_str += breeze_str(x-1, y)
+        axiom_str += pit_str(x-1, y)
         west = True
     if(x+1 < xmax):
         if west == True:
-            axiom_str += '&' + breeze_str(x+1, y)
+            axiom_str += '|' + pit_str(x+1, y)
         else:
-            axiom_str += breeze_str(x+1, y)
-        east = True    
+            axiom_str += pit_str(x+1, y)
+        east = True
     if(y-1 > ymin):
         if west or east:
-            axiom_str += '&' + breeze_str(x, y-1)
+            axiom_str += '|' + pit_str(x, y-1)
         else:
-            axiom_str += breeze_str(x, y-1)
+            axiom_str += pit_str(x, y-1)
         south = True
     if(y+1 < ymax):
         if west or east or south:
-            axiom_str += '&' + breeze_str(x, y+1)
+            axiom_str += '|' + pit_str(x, y+1)
         else:
-            axiom_str += breeze_str(x, y+1)
+            axiom_str += pit_str(x, y+1)
     return axiom_str
 
 def generate_pit_and_breeze_axioms(xmin, xmax, ymin, ymax):
@@ -273,7 +273,7 @@ def axiom_generator_wumpus_and_stench(x, y, xmin, xmax, ymin, ymax):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
-    axiom_str = wumpus_str(x, y) + '>>'
+    axiom_str = stench_str(x, y) + '<=>'
     south = False
     east = False
     west = False
@@ -282,19 +282,19 @@ def axiom_generator_wumpus_and_stench(x, y, xmin, xmax, ymin, ymax):
         west = True
     if(x+1 < xmax):
         if west == True:
-            axiom_str += '&' + stench_str(x+1, y)
+            axiom_str += '|' + stench_str(x+1, y)
         else:
             axiom_str += stench_str(x+1, y)
-        east = True    
+        east = True
     if(y-1 > ymin):
         if west or east:
-            axiom_str += '&' + stench_str(x, y-1)
+            axiom_str += '|' + stench_str(x, y-1)
         else:
             axiom_str += stench_str(x, y-1)
         south = True
     if(y+1 < ymax):
         if west or east or south:
-            axiom_str += '&' + stench_str(x, y+1)
+            axiom_str += '|' + stench_str(x, y+1)
         else:
             axiom_str += stench_str(x, y+1)
     return axiom_str
@@ -319,7 +319,7 @@ def axiom_generator_at_least_one_wumpus(xmin, xmax, ymin, ymax):
     # Comment or delete the next line once this function has been implemented.
     for i in range(xmin, xmax):
         for j in range(ymin, ymax):
-            if(i != xmax -1) and (j != ymax -1):
+            if(i != xmax-1) or (j != ymax-1):
                 axiom_str +=  wumpus_str(i, j) + " | "
             else:
                 axiom_str += wumpus_str(i, j)
@@ -336,17 +336,13 @@ def axiom_generator_at_most_one_wumpus(xmin, xmax, ymin, ymax):
     # Comment or delete the next line once this function has been implemented.
     for i in range(xmin, xmax):
         for j in range(ymin, ymax):
-            axiom_str += "(" + wumpus_str(i, j) + ' >> ~ ( '
-            for x in range(xmin, xmax):
-                for y in range(ymin, ymax):
-                    if (x != i) and (y != j):
-                        if(x != xmax) and (y != ymax):
-                            axiom_str += wumpus_str(x, y) + " & "
-                        else:
-                            axiom_str += wumpus_str(x, y)
-            axiom_str += "))"
-            if (i != xmax-1) and (y != ymax -1):
-                axiom_str += "&"
+            if((i != xmax-1) or (j != ymax-1)):
+                axiom_str += "~" + wumpus_str(i, j) + " | "
+            else:
+                print "My print: "
+                print "\ti: " + str(i) + "\tj: " + str(j)
+                print "\txmax: " + str(xmax) + "\tymax: " + str(ymax)
+                axiom_str += "~" + wumpus_str(i, j)
     return axiom_str
 
 def axiom_generator_only_in_one_location(xi, yi, xmin, xmax, ymin, ymax, t = 0):
