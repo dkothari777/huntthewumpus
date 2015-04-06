@@ -126,21 +126,25 @@ class PlanRouteProblem(search.Problem):
         Heuristic that will be used by search.astar_search()
         """
         "*** YOUR CODE HERE ***"
-        pass
+        # TODO: Add code to check against wumpus/pits
+        max = 0
+        for state in node.allowed:
+            max = max(manhattan_distance_with_heading(node), manhattan_distance_with_heading(state))
+        return max
 
     def actions(self, state):
         """
         Return list of allowed actions that can be made in state
         """
         "*** YOUR CODE HERE ***"
-        pass
-
+        return self.allowed
 
     def result(self, state, action):
         """
         Return the new state after applying action to state
         """
         "*** YOUR CODE HERE ***"
+        # TODO: Complete this method!
         pass
 
     def goal_test(self, state):
@@ -148,7 +152,10 @@ class PlanRouteProblem(search.Problem):
         Return True if state is a goal state
         """
         "*** YOUR CODE HERE ***"
-        return True
+        for goal in self.goals:
+            if state == goal:
+                return True
+        return False
 
 #-------------------------------------------------------------------------------
 
@@ -231,25 +238,28 @@ class PlanShotProblem(search.Problem):
         Heuristic that will be used by search.astar_search()
         """
         "*** YOUR CODE HERE ***"
-        pass
+        # TODO: Add code to check against wumpus/pits
+        max = 0
+        for state in node.allowed:
+            max = max(manhattan_distance_with_heading(node), manhattan_distance_with_heading(state))
+        return max
 
     def actions(self, state):
         """
         Return list of allowed actions that can be made in state
         """
         "*** YOUR CODE HERE ***"
-        pass
-
-        "*** YOUR CODE HERE ***"
-        pass
-
+        return self.allowed
 
     def goal_test(self, state):
         """
         Return True if state is a goal state
         """
         "*** YOUR CODE HERE ***"
-        return True
+        for goal in self.goals:
+            if state == goal:
+                return True
+        return False
 
 #-------------------------------------------------------------------------------
 
