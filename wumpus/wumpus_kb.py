@@ -382,7 +382,6 @@ def axiom_generator_only_one_heading(heading = 'north', t = 0):
     axiom_str = ''
     "*** YOUR CODE HERE ***"
     if heading == 'north':
-        print "headed north?"
         axiom_str = '{0} <=> ~({1} & {2} & {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
     elif heading == 'east':
         axiom_str = '{1} <=> ~({0} & {2} & {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
