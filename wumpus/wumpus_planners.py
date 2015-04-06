@@ -127,11 +127,11 @@ class PlanRouteProblem(search.Problem):
         """
         "*** YOUR CODE HERE ***"
         # TODO: Add code to check against wumpus/pits
-        min = 0
+        goal_min = 0
         for goal in self.goals:
             for state in self.allowed:
-                min = min(manhattan_distance_with_heading(node, goal), manhattan_distance_with_heading(state, goal))
-        return min
+                goal_min = min(manhattan_distance_with_heading(node, goal), manhattan_distance_with_heading(state, goal))
+        return goal_min
 
     def actions(self, state):
         """
