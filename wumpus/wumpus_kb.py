@@ -223,7 +223,7 @@ def axiom_generator_pits_and_breezes(x, y, xmin, xmax, ymin, ymax):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
-    axiom_str = breeze_str(x,y) + '<=>'
+    axiom_str = breeze_str(x,y) + '>>'
     south = False
     east = False
     west = False
@@ -273,7 +273,7 @@ def axiom_generator_wumpus_and_stench(x, y, xmin, xmax, ymin, ymax):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
-    axiom_str = stench_str(x, y) + '<=>'
+    axiom_str = stench_str(x, y) + '>>'
     south = False
     east = False
     west = False
@@ -360,15 +360,23 @@ def axiom_generator_only_in_one_location(xi, yi, xmin, xmax, ymin, ymax, t = 0):
     axiom_str = ''
     "*** YOUR CODE HERE ***"
     axioms = []
+<<<<<<< HEAD
     axiom_str = '{0}<=>~('.format(state_loc_str(xi, yi, t))
+=======
+    axiom_str = '{0} >> ~('.format(state_loc_str(xi, yi, t))
+>>>>>>> dfaa7c267b741a97085312ea9557a1bffd48640b
     for x in range(xmin, xmax+1):
         for y in range(ymin, ymax+1):
             if x != xi or y != yi:
                 axioms.append('{0}'.format(state_loc_str(x, y, t)))
+<<<<<<< HEAD
     axiom_str += '&'.join(axioms) + ')'
+=======
+    axiom_str += ' | '.join(axioms) + ')'
+
+>>>>>>> dfaa7c267b741a97085312ea9557a1bffd48640b
     # Comment or delete the next line once this function has been implemented.
     # utils.print_not_implemented()
-    print axiom_str
     return axiom_str
 
 def axiom_generator_only_one_heading(heading = 'north', t = 0):
@@ -382,13 +390,13 @@ def axiom_generator_only_one_heading(heading = 'north', t = 0):
     axiom_str = ''
     "*** YOUR CODE HERE ***"
     if heading == 'north':
-        axiom_str = '{0} <=> ~({1} & {2} & {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
+        axiom_str = '{0} >> ~({1} | {2} | {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
     elif heading == 'east':
-        axiom_str = '{1} <=> ~({0} & {2} & {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
+        axiom_str = '{1} >> ~({0} | {2} | {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
     elif heading == 'south':
-        axiom_str = '{2} <=> ~({1} & {0} & {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
+        axiom_str = '{2} >> ~({1} | {0} | {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
     else:
-        axiom_str = '{3} <=> ~({1} & {2} & {0})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
+        axiom_str = '{3} >> ~({1} | {2} | {0})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
     # Comment or delete the next line once this function has been implemented.
     # utils.print_not_implemented()
     return axiom_str
@@ -470,7 +478,7 @@ def axiom_generator_breeze_percept_and_location_property(x, y, t):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
-    axiom_str = '{0} <=> {1}'.format(percept_breeze_str(t), breeze_str(x, y))
+    axiom_str = '{0} >> {1}'.format(percept_breeze_str(t), breeze_str(x, y))
     return axiom_str
 
 def generate_breeze_percept_and_location_axioms(t, xmin, xmax, ymin, ymax):
@@ -492,7 +500,7 @@ def axiom_generator_stench_percept_and_location_property(x, y, t):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
-    axiom_str = '{0} <=> {1}'.format(percept_stench_str(t), stench_str(x, y))
+    axiom_str = '{0} >> {1}'.format(percept_stench_str(t), stench_str(x, y))
     return axiom_str
 
 def generate_stench_percept_and_location_axioms(t, xmin, xmax, ymin, ymax):
@@ -531,6 +539,15 @@ def axiom_generator_at_location_ssa(t, x, y, xmin, xmax, ymin, ymax):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
+
+    clauses = []
+    # Forward clauses
+    clauses.append('(({0} & {1} & {2}) <=> {3})'.format(state_loc_str(x,y,t), state_heading_east_str(t), action_forward_str(t), state_loc_str(x+1,y,t+1)))
+    clauses.append('(({0} & {1} & {2}) <=> {3})'.format(state_loc_str(x,y,t), state_heading_west_str(t), action_forward_str(t), state_loc_str(x-1,y,t+1)))
+    clauses.append('(({0} & {1} & {2}) <=> {3})'.format(state_loc_str(x,y,t), state_heading_north_str(t), action_forward_str(t), state_loc_str(x,y+1,t+1)))
+    clauses.append('(({0} & {1} & {2}) <=> {3})'.format(state_loc_str(x,y,t), state_heading_south_str(t), action_forward_str(t), state_loc_str(x,y-1,t+1)))
+    clauses.append('({0} <=> (({1} | {2} | {3}) & {4}))'.format(state_loc_str(x,y,t+1), action_wait_str(t), action_grab_str(t), action_shoot_str(t), state_loc_str(x,y,t)))
+    axiom_str = ' | '.join(clauses)
     return axiom_str
 
 def generate_at_location_ssa(t, x, y, xmin, xmax, ymin, ymax, heading):
