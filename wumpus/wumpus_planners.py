@@ -146,6 +146,7 @@ class PlanRouteProblem(search.Problem):
         """
         "*** YOUR CODE HERE ***"
         # TODO: Complete this method!
+        action
         pass
 
     def goal_test(self, state):
