@@ -363,7 +363,7 @@ def axiom_generator_only_in_one_location(xi, yi, xmin, xmax, ymin, ymax, t = 0):
     axiom_str = '{0} <=> ~('.format(state_loc_str(xi, yi, t))
     for x in range(xmin, xmax+1):
         for y in range(ymin, ymax+1):
-            if x != xi and y != yi:
+            if x != xi or y != yi:
                 axioms.append('{0}'.format(state_loc_str(x, y, t)))
 
     axiom_str += ' & '.join(axioms) + ')'
