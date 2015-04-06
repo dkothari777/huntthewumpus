@@ -335,7 +335,7 @@ def axiom_generator_at_most_one_wumpus(xmin, xmax, ymin, ymax):
     "*** YOUR CODE HERE ***"
     # Comment or delete the next line once this function has been implemented.
     size = (xmax) * (ymax )
-    ysize = ymax 
+    ysize = ymax
     for index in range(0, size):
         for num in range(index+1, size):
             i = (index/ysize) + 1
@@ -444,12 +444,7 @@ def axiom_generator_location_OK(x, y, t):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
-
-    if axiom_generator_wumpus_and_stench(x,y,x,x,y,y):
-        axiom_str += wumpus_str(x,y) + stench_str(x,y)
-
-    if axiom_generator_pits_and_breezes(x,y,x,x,y,y):
-        axiom_str += pit_str(x,y) +  breeze_str(x,y)
+    axiom_str = '(~{1} & (~{2} | ({2} & ~{3}))) >> {0}'.format(state_OK_str(x, y, t), pit_str(x, y), wumpus_str(x, y), state_wumpus_alive_str(t))
 
     return axiom_str
 
