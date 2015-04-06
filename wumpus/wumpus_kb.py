@@ -206,7 +206,7 @@ def axiom_generator_initial_location_assertions(x, y):
     axiom_str = ''
     "*** YOUR CODE HERE ***"
     # Comment or delete the next line once this function has been implemented.
-    axiom_str = state_loc_str(x,y,0) + ">> (~" + wumpus_str(x, y) + '&~' + pit_str(x, y) + ")"
+    axiom_str = "~" + wumpus_str(x, y) + '&~' + pit_str(x, y)
 
     #utils.print_not_implemented()
     return axiom_str
@@ -223,7 +223,7 @@ def axiom_generator_pits_and_breezes(x, y, xmin, xmax, ymin, ymax):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
-    axiom_str = breeze_str(x,y) + '>>'
+    axiom_str = breeze_str(x,y) + '>> ('
     south = False
     east = False
     west = False
@@ -247,6 +247,7 @@ def axiom_generator_pits_and_breezes(x, y, xmin, xmax, ymin, ymax):
             axiom_str += '|' + pit_str(x, y+1)
         else:
             axiom_str += pit_str(x, y+1)
+    axiom_str += ")"
     return axiom_str
 
 def generate_pit_and_breeze_axioms(xmin, xmax, ymin, ymax):
@@ -273,30 +274,31 @@ def axiom_generator_wumpus_and_stench(x, y, xmin, xmax, ymin, ymax):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
-    axiom_str = stench_str(x, y) + '>>'
+    axiom_str = stench_str(x, y) + '>> ('
     south = False
     east = False
     west = False
     if(x-1 >= xmin):
-        axiom_str += stench_str(x-1, y)
+        axiom_str += wumpus_str(x-1, y)
         west = True
     if(x+1 <= xmax):
         if west == True:
-            axiom_str += '|' + stench_str(x+1, y)
+            axiom_str += '|' + wumpus_str(x+1, y)
         else:
-            axiom_str += stench_str(x+1, y)
+            axiom_str += wumpus_str(x+1, y)
         east = True
     if(y-1 >= ymin):
         if west or east:
-            axiom_str += '|' + stench_str(x, y-1)
+            axiom_str += '|' + wumpus_str(x, y-1)
         else:
-            axiom_str += stench_str(x, y-1)
+            axiom_str += wumpus_str(x, y-1)
         south = True
     if(y+1 <= ymax):
         if west or east or south:
-            axiom_str += '|' + stench_str(x, y+1)
+            axiom_str += '|' + wumpus_str(x, y+1)
         else:
-            axiom_str += stench_str(x, y+1)
+            axiom_str += wumpus_str(x, y+1)
+    axiom_str += ")"
     return axiom_str
 
 def generate_wumpus_and_stench_axioms(xmin, xmax, ymin, ymax):
@@ -381,13 +383,13 @@ def axiom_generator_only_one_heading(heading = 'north', t = 0):
     axiom_str = ''
     "*** YOUR CODE HERE ***"
     if heading == 'north':
-        axiom_str = '{0} >> ~({1} | {2} | {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
+        axiom_str = '{0} &  ~({1} | {2} | {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
     elif heading == 'east':
-        axiom_str = '{1} >> ~({0} | {2} | {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
+        axiom_str = '{1} & ~({0} | {2} | {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
     elif heading == 'south':
-        axiom_str = '{2} >> ~({1} | {0} | {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
+        axiom_str = '{2} & ~({1} | {0} | {3})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
     else:
-        axiom_str = '{3} >> ~({1} | {2} | {0})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
+        axiom_str = '{3} & ~({1} | {2} | {0})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
     # Comment or delete the next line once this function has been implemented.
     # utils.print_not_implemented()
     return axiom_str
