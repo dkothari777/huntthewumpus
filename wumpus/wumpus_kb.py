@@ -501,6 +501,11 @@ def axiom_generator_at_location_ssa(t, x, y, xmin, xmax, ymin, ymax):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
+
+    for a in range(xmin,xmax):
+        for b in range(ymin,ymax):
+            i=0
+
     return axiom_str
 
 def generate_at_location_ssa(t, x, y, xmin, xmax, ymin, ymax, heading):
