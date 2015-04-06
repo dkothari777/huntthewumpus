@@ -334,15 +334,21 @@ def axiom_generator_at_most_one_wumpus(xmin, xmax, ymin, ymax):
     axiom_str = ''
     "*** YOUR CODE HERE ***"
     # Comment or delete the next line once this function has been implemented.
-    for i in range(xmin, xmax):
-        for j in range(ymin, ymax):
-            if((i != xmax-1) or (j != ymax-1)):
-                axiom_str += "~" + wumpus_str(i, j) + " | "
+    size = (xmax-1) * (ymax -1)
+    ysize = ymax -1
+    print "this is my size: " + str(size)
+    for index in range(0, size):
+        for num in range(index+1, size):
+            i = (index/ysize) + 1
+            j = (index%ysize) + 1
+            x = (num/ysize) + 1
+            y = (num%ysize) +1
+            temp = "(~" + wumpus_str(i, j) + " | " + "~" + wumpus_str(x,y) + ")"
+            if axiom_str == '':
+                 axiom_str = temp
             else:
-                print "My print: "
-                print "\ti: " + str(i) + "\tj: " + str(j)
-                print "\txmax: " + str(xmax) + "\tymax: " + str(ymax)
-                axiom_str += "~" + wumpus_str(i, j)
+                 axiom_str += '&' + temp
+    print axiom_str
     return axiom_str
 
 def axiom_generator_only_in_one_location(xi, yi, xmin, xmax, ymin, ymax, t = 0):
