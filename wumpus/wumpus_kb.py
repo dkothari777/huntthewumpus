@@ -370,7 +370,6 @@ def axiom_generator_only_in_one_location(xi, yi, xmin, xmax, ymin, ymax, t = 0):
     axiom_str += '&'.join(axioms) + ')'
     # Comment or delete the next line once this function has been implemented.
     # utils.print_not_implemented()
-    print "only in one location = "+ axiom_str
     return axiom_str
 
 def axiom_generator_only_one_heading(heading = 'north', t = 0):
@@ -393,7 +392,6 @@ def axiom_generator_only_one_heading(heading = 'north', t = 0):
         axiom_str = '{3} & ~({1} | {2} | {0})'.format(state_heading_north_str(t), state_heading_east_str(t), state_heading_south_str(t), state_heading_west_str(t))
     # Comment or delete the next line once this function has been implemented.
     # utils.print_not_implemented()
-    print "only one heading = " + axiom_str
     return axiom_str
 
 def axiom_generator_have_arrow_and_wumpus_alive(t = 0):
@@ -538,13 +536,13 @@ def axiom_generator_at_location_ssa(t, x, y, xmin, xmax, ymin, ymax):
     clauses = []
     # Forward clauses
     if x + 1 <= xmax:
-        clauses.append('(({0} & {1} & {2}) <=> {3})'.format(state_loc_str(x,y,t), state_heading_east_str(t), action_forward_str(t), state_loc_str(x+1,y,t+1)))
+        clauses.append('(({0} & {1} & {2}) >> ({3} & ~{4}))'.format(state_loc_str(x,y,t), state_heading_east_str(t), action_forward_str(t), state_loc_str(x+1,y,t+1), state_loc_str(x,y,t+1)))
     if x - 1 >= xmin:
-        clauses.append('(({0} & {1} & {2}) <=> {3})'.format(state_loc_str(x,y,t), state_heading_west_str(t), action_forward_str(t), state_loc_str(x-1,y,t+1)))
+        clauses.append('(({0} & {1} & {2}) >> ({3} & ~{4}))'.format(state_loc_str(x,y,t), state_heading_west_str(t), action_forward_str(t), state_loc_str(x-1,y,t+1), state_loc_str(x,y,t+1)))
     if y + 1 <= ymax:
-        clauses.append('(({0} & {1} & {2}) <=> {3})'.format(state_loc_str(x,y,t), state_heading_north_str(t), action_forward_str(t), state_loc_str(x,y+1,t+1)))
+        clauses.append('(({0} & {1} & {2}) >> ({3} & ~{4}))'.format(state_loc_str(x,y,t), state_heading_north_str(t), action_forward_str(t), state_loc_str(x,y+1,t+1), state_loc_str(x,y,t+1)))
     if y - 1 >= ymin:
-        clauses.append('(({0} & {1} & {2}) <=> {3})'.format(state_loc_str(x,y,t), state_heading_south_str(t), action_forward_str(t), state_loc_str(x,y-1,t+1)))
+        clauses.append('(({0} & {1} & {2}) >> ({3} & ~{4}))'.format(state_loc_str(x,y,t), state_heading_south_str(t), action_forward_str(t), state_loc_str(x,y-1,t+1), state_loc_str(x,y,t+1)))
     clauses.append('({0} <=> (({1} | {2} | {3} | {4} | {6}) & {6}))'.format(state_loc_str(x,y,t+1), action_wait_str(t), action_grab_str(t), action_shoot_str(t), action_turn_left_str(t), action_turn_right_str(t), state_loc_str(x,y,t)))
 
     axiom_str = ' | '.join(clauses)
