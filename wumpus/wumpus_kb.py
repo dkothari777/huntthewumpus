@@ -749,24 +749,17 @@ def axiom_generator_only_one_action_axioms(t):
     """
     axiom_str = ''
     "*** YOUR CODE HERE ***"
+    axiom_str_arr= [action_forward_str(t), action_grab_str(t), action_shoot_str(t), action_climb_str(t), action_turn_left_str(t), action_turn_right_str(t), action_wait_str(t)]
     axioms = []
-    axioms.append('({0} & ~({1} | {2} | {3} | {4} | {5} | {6}))'.format(action_forward_str(t), action_grab_str(t), action_shoot_str(t), action_climb_str(t), action_turn_left_str(t), action_turn_right_str(t), action_wait_str(t)))
-    axioms.append('({0} & ~({1} | {2} | {3} | {4} | {5} | {6}))'.format(action_grab_str(t), action_shoot_str(t), action_climb_str(t), action_turn_left_str(t), action_turn_right_str(t), action_wait_str(t), action_forward_str(t)))
-    axioms.append('({0} & ~({1} | {2} | {3} | {4} | {5} | {6}))'.format(action_shoot_str(t), action_climb_str(t), action_turn_left_str(t), action_turn_right_str(t), action_wait_str(t), action_forward_str(t), action_grab_str(t)))
-    axioms.append('({0} & ~({1} | {2} | {3} | {4} | {5} | {6}))'.format(action_climb_str(t), action_turn_left_str(t), action_turn_right_str(t), action_wait_str(t), action_forward_str(t), action_grab_str(t), action_shoot_str(t)))
-    axioms.append('({0} & ~({1} | {2} | {3} | {4} | {5} | {6}))'.format(action_turn_left_str(t), action_turn_right_str(t), action_wait_str(t), action_forward_str(t), action_grab_str(t), action_shoot_str(t), action_climb_str(t)))
-    axioms.append('({0} & ~({1} | {2} | {3} | {4} | {5} | {6}))'.format(action_turn_right_str(t), action_wait_str(t), action_forward_str(t), action_grab_str(t), action_shoot_str(t), action_climb_str(t), action_turn_left_str(t)))
-    axioms.append('({0} & ~({1} | {2} | {3} | {4} | {5} | {6}))'.format(action_wait_str(t), action_forward_str(t), action_grab_str(t), action_shoot_str(t), action_climb_str(t), action_turn_left_str(t), action_turn_right_str(t)))
-#    axioms.append('({0}{7} >> (~{1}{7} & ~{2}{7} & ~{3}{7} & ~{4}{7} & ~{5}{7} & ~{6}{7}))'.format('Forward', 'Grab', 'Shoot', 'Climb', 'TurnLeft', 'TurnRight', 'Wait', t))
- #   axioms.append('({0}{7} >> (~{1}{7} & ~{2}{7} & ~{3}{7} & ~{4}{7} & ~{5}{7} & ~{6}{7}))'.format('Grab', 'Shoot', 'Climb', 'TurnLeft', 'TurnRight', 'Wait', 'Forward', t))
-  #  axioms.append('({0}{7} >> (~{1}{7} & ~{2}{7} & ~{3}{7} & ~{4}{7} & ~{5}{7} & ~{6}{7}))'.format('Shoot', 'Climb', 'TurnLeft', 'TurnRight', 'Wait', 'Forward', 'Grab', t))
-  #  axioms.append('({0}{7} >> (~{1}{7} & ~{2}{7} & ~{3}{7} & ~{4}{7} & ~{5}{7} & ~{6}{7}))'.format('Climb', 'TurnLeft', 'TurnRight', 'Wait', 'Forward', 'Grab', 'Shoot', t))
-   # axioms.append('({0}{7} >> (~{1}{7} & ~{2}{7} & ~{3}{7} & ~{4}{7} & ~{5}{7} & ~{6}{7}))'.format('TurnLeft', 'TurnRight', 'Wait', 'Forward', 'Grab', 'Shoot', 'Climb', t))
-   # axioms.append('({0}{7} >> (~{1}{7} & ~{2}{7} & ~{3}{7} & ~{4}{7} & ~{5}{7} & ~{6}{7}))'.format('TurnRight', 'Wait', 'Forward', 'Grab', 'Shoot', 'Climb', 'TurnLeft', t))
-   # axioms.append('({0}{7} >> (~{1}{7} & ~{2}{7} & ~{3}{7} & ~{4}{7} & ~{5}{7} & ~{6}{7}))'.format('Wait', 'Forward', 'Grab', 'Shoot', 'Climb', 'TurnLeft', 'TurnRight', t))
-    axiom_str = ' | '.join(axioms)
+    for i in range(0, len(axiom_str_arr)):
+        for j in range(i+1, len(axiom_str_arr)):
+            axioms.append("(~" + axiom_str_arr[i] + "|~" + axiom_str_arr[j] + ")")
+
+    axiom_str = "("+ '|'.join(axiom_str_arr) + ")&"
+    axiom_str += "(" + ' & '.join(axioms) + ")"
     # Comment or delete the next line once this function has been implemented.
     # utils.print_not_implemented()
+    print "axiom_str = " + axiom_str
     return axiom_str
 
 
