@@ -63,6 +63,7 @@ class PropKB_SAT(PropKB):
         """ Assumes query is a single positive proposition """
         if isinstance(query,str):
             query = expr(query)
+            print query
         sT = minisat(self.clauses, None, variable=query, value=True, verbose=False)
         sF = minisat(self.clauses, None, variable=query, value=False, verbose=False)
         if sT.success == sF.success:
