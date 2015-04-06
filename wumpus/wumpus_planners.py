@@ -127,10 +127,11 @@ class PlanRouteProblem(search.Problem):
         """
         "*** YOUR CODE HERE ***"
         # TODO: Add code to check against wumpus/pits
-        max = 0
-        for state in node.allowed:
-            max = max(manhattan_distance_with_heading(node), manhattan_distance_with_heading(state))
-        return max
+        min = 0
+        for goal in self.goals:
+            for state in self.allowed:
+                min = min(manhattan_distance_with_heading(node, goal), manhattan_distance_with_heading(state, goal))
+        return min
 
     def actions(self, state):
         """
@@ -239,10 +240,11 @@ class PlanShotProblem(search.Problem):
         """
         "*** YOUR CODE HERE ***"
         # TODO: Add code to check against wumpus/pits
-        max = 0
-        for state in node.allowed:
-            max = max(manhattan_distance_with_heading(node), manhattan_distance_with_heading(state))
-        return max
+        min = 0
+        for goal in self.goals:
+            for state in self.allowed:
+                min = min(manhattan_distance_with_heading(node, goal), manhattan_distance_with_heading(state, goal))
+        return min
 
     def actions(self, state):
         """
