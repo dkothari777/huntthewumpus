@@ -336,7 +336,6 @@ def axiom_generator_at_most_one_wumpus(xmin, xmax, ymin, ymax):
     # Comment or delete the next line once this function has been implemented.
     size = (xmax-1) * (ymax -1)
     ysize = ymax -1
-    print "this is my size: " + str(size)
     for index in range(0, size):
         for num in range(index+1, size):
             i = (index/ysize) + 1
@@ -348,7 +347,6 @@ def axiom_generator_at_most_one_wumpus(xmin, xmax, ymin, ymax):
                  axiom_str = temp
             else:
                  axiom_str += '&' + temp
-    print axiom_str
     return axiom_str
 
 def axiom_generator_only_in_one_location(xi, yi, xmin, xmax, ymin, ymax, t = 0):
